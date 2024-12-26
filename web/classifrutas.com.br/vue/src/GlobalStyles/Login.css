@@ -1,0 +1,119 @@
+.social-auth-button {
+    width: 100%; /* Garante que o botão ocupe 100% da largura do container */
+    max-width: 383px; /* Limita a largura máxima */
+    height: 48px;
+    border-radius: 20px;
+    border: 1px solid #E2E0E2;
+    background-color: #FFFFFF;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-login-buttons-icon {
+    height: 20px; /* Tamanho dos ícones ajustado */
+    width: 20px;
+    margin-right: 10px;
+}
+
+.social-button {
+    width: 100%; /* Garante que os botões ocupem a largura total */
+    max-width: 383px; /* Limita a largura máxima ao tamanho desejado */
+}
+
+.signin {
+    width: 383px;
+}
+.signin .signin-button {
+    width: 100%; /* Ajusta o botão para 100% da largura do formulário */
+    height: 48px;
+    border-radius: 20px;
+    border: none;
+    background-color: #EE2641;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    margin-top: 20px; /* Espaço superior do botão */
+}
+
+.login-buttons {
+    margin-top: 20px;
+    width: 100%; /* Garante que os botões ocupem toda a largura */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* -------- Estilo do checkbox -------- */
+.checkbox-field {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o texto com o checkbox */
+}
+
+.checkbox-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 3px;
+    margin-right: 8px; /* Espaço entre o checkbox e o texto */
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox-input:checked {
+    background-color: #EE2641;
+    border-color: #EE2641;
+}
+
+.checkbox-input:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .social-button .social-auth-button {
+        width: 90%; /* Reduz a largura dos botões em telas pequenas */
+        font-size: 14px; /* Ajusta o tamanho da fonte */
+    }
+
+    .social-login-buttons-icon {
+        height: 18px; /* Ajusta o tamanho dos ícones */
+        width: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-button .social-auth-button {
+        font-size: 13px; /* Ajusta o tamanho da fonte para celulares muito pequenos */
+    }
+
+    .social-login-buttons-icon {
+        height: 16px; /* Ajusta ainda mais o tamanho dos ícones */
+        width: 16px;
+    }
+}
+

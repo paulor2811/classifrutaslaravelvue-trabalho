@@ -1,0 +1,82 @@
+services:
+  php:
+    build:
+      context: ./etc/php
+      dockerfile: Dockerfile
+    container_name: php-fpm
+    working_dir: /var/www/laravel
+    restart: always
+    volumes:
+      - ./web/classifrutas.com.br/laravel:/var/www/laravel
+    environment:
+      APP_ENV: local
+      APP_DEBUG: 1
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: postgres
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  node:
+    build:
+      context: ./etc/node
+      dockerfile: Dockerfile
+    container_name: node-builder
+    working_dir: /app
+    restart: always
+    volumes:
+      - ./web/classifrutas.com.br/vue:/app
+    #PRODUCAO command: sh -c "npm install && npm run build"
+    command: sh -c "npm install && npm run build -- --watch"
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-web
+    restart: always
+    ports:
+      - "88:80"
+    volumes:
+      - ./web/classifrutas.com.br/laravel:/var/www/laravel
+      - ./web/classifrutas.com.br/laravel/public:/var/www/laravel/public
+      - ./web/classifrutas.com.br/vue/dist:/var/www/vue
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./etc/nginx/sites-available:/etc/nginx/sites-available
+      - ./etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+    depends_on:
+      - php
+    networks:
+      - app-network
+    command: /bin/sh -c "rm -f /etc/nginx/sites-enabled/* && \
+                        ln -s /etc/nginx/sites-available/classifrutas.com.br.conf /etc/nginx/sites-enabled/classifrutas.local.conf && \
+                        ln -s /etc/nginx/sites-available/api.classifrutas.com.br.conf /etc/nginx/sites-enabled/api.classifrutas.local.conf && \
+                        nginx -g 'daemon off;'"
+
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    name: projeto_app-network
+    driver: bridge
+
+volumes:
+  db_data:

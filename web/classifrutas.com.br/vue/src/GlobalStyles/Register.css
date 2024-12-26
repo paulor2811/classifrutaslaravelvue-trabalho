@@ -1,0 +1,42 @@
+/* -------- Estilo do checkbox -------- */
+.checkbox-field {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o texto com o checkbox */
+}
+
+.checkbox-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 3px;
+    margin-right: 8px; /* Espaço entre o checkbox e o texto */
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox-input:checked {
+    background-color: #EE2641;
+    border-color: #EE2641;
+}
+
+.checkbox-input:checked::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
