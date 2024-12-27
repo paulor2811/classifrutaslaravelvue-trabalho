@@ -27,6 +27,26 @@ const routes = [
         component: () => import('../view/PerfilConta2.vue')
     },
     {
+        path: '/registrar/4',
+        name: 'ConfirmarEndereco',
+        component: () => import('../view/ConfirmarEndereco.vue')
+    },
+    {
+        path:   '/registrar/5',
+        name: 'ConfirmarDadosProdutor',
+        component: () => import('../view/ConfirmarDadosProdutor.vue')
+    },
+    {
+        path: '/registrar/6',
+        name: 'DadosEmpresa',
+        component: () => import('../view/DadosEmpresa.vue')
+    },
+    {
+        path: '/registrar/7',
+        name: 'DadosResEnterposto',
+        component: () => import('../view/RegisterDataEnterposto.vue')
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import('../view/Login.vue'), // Página inicial
