@@ -1,11 +1,11 @@
 <script>
-import BarraSuperior from '../components/GeralComponents/Header.vue';
-import PageTitle from "../components/Login/PageTitle.vue";
-import BotaoRegistroAutomatico from '../components/Login/LoginOptions.vue';
+import Cabecalho from '../components/GeralComponents/Cabecalho.vue';
+import PageTitle from "../components/login/PageTitle.vue";
+import BotaoRegistroAutomatico from '../components/login/LoginOptions.vue';
 export default {
   name: "Login",
   components: {
-    BarraSuperior,
+    Cabecalho,
     PageTitle,
     BotaoRegistroAutomatico,
   },
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <BarraSuperior />
+  <Cabecalho />
   <PageTitle />
   <BotaoRegistroAutomatico />
 </template>

@@ -1,0 +1,1 @@
+import{_ as o,e as r,o as t,r as n}from"./index-D7a6wvIc.js";const s={name:"Registro",components:{}};function c(a,_,p,i,m,f){const e=n("router-view");return t(),r(e)}const d=o(s,[["render",c]]);export{d as default};

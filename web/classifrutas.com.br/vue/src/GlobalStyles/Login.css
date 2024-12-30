@@ -28,7 +28,7 @@
     width: 383px;
 }
 .signin .signin-button {
-    width: 100%; /* Ajusta o botão para 100% da largura do formulário */
+    width: 383px; /* Ajusta o botão para 100% da largura do formulário */
     height: 48px;
     border-radius: 20px;
     border: none;
@@ -103,6 +103,12 @@
     .social-login-buttons-icon {
         height: 18px; /* Ajusta o tamanho dos ícones */
         width: 18px;
+    }
+    .signin {
+        width: 100%;
+    }
+    .signin .signin-button {
+        width: 100%;
     }
 }
 
