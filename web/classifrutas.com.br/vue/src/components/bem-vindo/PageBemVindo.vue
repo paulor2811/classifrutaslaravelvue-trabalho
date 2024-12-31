@@ -22,7 +22,7 @@ export default {
         <h4 class="page-title">bem vindo ao</h4>
       </div>
       <div class="conteudo row">
-        <div class="col-6">
+        <div class="coluna1 col-6">
           <div class="imagem">
             <img src="../../assets/site-assets/classifrutas-img1.png" class="cf-imagem"/>
           </div>
@@ -36,7 +36,7 @@ export default {
             <p>publique seu anúncios, sejam bem avaliado e divulgue a<br/>qualidade dos seus produtos.</p>
           </div>
         </div>
-        <div class="col-6">
+        <div class="coluna2 col-6">
           <div class="imagem">
             <img src="../../assets/site-assets/classifrutas-img2.png" class="cf-imagem"/>
           </div>
@@ -61,6 +61,10 @@ export default {
 .container {
   flex-direction: column;
   width: 1080px;
+  z-index: 1;
+}
+.conteudo {
+  max-width: 90%;
 }
 .img-banner {
   width: 904px;
@@ -91,6 +95,7 @@ export default {
   position: fixed;
   top: 280px;
   opacity: 60%;
+  z-index: -1;
 }
 .descricao {
   margin-top: 30px;
@@ -119,5 +124,13 @@ export default {
 }
 .imagem {
   margin-top: 50px;
+}
+.coluna1 {
+  margin-right: 10px;
+  max-width: 48%;
+}
+.coluna2 {
+  margin-left: 10px;
+  max-width: 48%;
 }
 </style>

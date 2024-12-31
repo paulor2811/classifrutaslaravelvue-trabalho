@@ -74,6 +74,16 @@ const routes = [
         component: () => import('../components/bem-vindo/PageBemVindo.vue'),
     },
     {
+        path: '/condicoes',
+        name: 'Condicoes',
+        component: () => import('../components/condicoes/condicoes.vue')
+    },
+    {
+        path: '/publicar',
+        name: 'Publicar',
+        component: () => import('../components/publicar/PagePublicar.vue')
+    },
+    {
         path: '/loading',
         name: 'Loading',
         component: () => import('../components/GeralComponents/Loading.vue'),
