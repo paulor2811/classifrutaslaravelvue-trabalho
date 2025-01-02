@@ -82,12 +82,6 @@
           política de privacidade do Classifrutas
         </label>
       </div>
-
-      <div class="signup-button">
-        <button class="button" @click="submitForm">
-          criar conta
-        </button>
-      </div>
       <a class="link-signup-text" href="http://classifrutas.local:88/login">já tenho uma conta</a>
     </div>
   </section>

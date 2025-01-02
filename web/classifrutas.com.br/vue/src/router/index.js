@@ -78,10 +78,22 @@ const routes = [
         name: 'Condicoes',
         component: () => import('../components/condicoes/condicoes.vue')
     },
+
     {
-        path: '/publicar',
-        name: 'Publicar',
-        component: () => import('../components/publicar/PagePublicar.vue')
+        path: '/criar-anuncio',
+        name: 'CriarAnuncio',
+        children: [
+            {
+                path: '1',
+                name: "Tipo",
+                component: () => import('../components/criar-anuncio/1/PageTipo.vue')
+            },
+            {
+                path: '2',
+                name: 'Publicar',
+                component: () => import('../components/criar-anuncio/2/PagePublicar.vue')
+            },
+        ]
     },
     {
         path: '/loading',
