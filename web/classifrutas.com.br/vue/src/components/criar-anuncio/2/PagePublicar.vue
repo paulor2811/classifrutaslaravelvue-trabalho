@@ -1,5 +1,7 @@
 <script>
 import Cabecalho from "../../inicial/Cabecalho.vue";
+import imagemPadraoGrande from "../../../assets/site-assets/anunciar/imagem-grande-icon.png"
+import imagemPadraoPequena from "../../../assets/site-assets/anunciar/imagem-pequena-icon.png"
 export default {
   name: "PagePublicar",
   components: {
@@ -8,7 +10,25 @@ export default {
   data() {
     return {
       isOn: false, // Estado inicial (desligado)
-    };
+      frutas: {
+        maca: ["Gala", "Fuji", "Granny Smith"],
+        banana: ["Nanica", "Prata", "Maçã"],
+        uva: ["Niágara", "Isabel", "Thompson"],
+      },
+      frutaSelecionada: "", // Fruta selecionada pelo usuário
+      variedadesDisponiveis: [], // Variedades disponíveis para a fruta selecionada
+      variedadeSelecionada: "", // Variedade escolhida
+      unidades: {
+        KG: ["20KG", "40KG", "60KG"],
+        G: ["20g", "40g", "60g"],
+        MG: ["20mg", "40mg", "60mg"],
+      },
+      unidadeSelecionada: "",
+      fatorDisponiveis: [],
+      fatorSelecionada: "",
+
+      imagemSelecionadaGrande: imagemPadraoGrande,
+      imagemSelecionadaPequena: [imagemPadraoPequena, imagemPadraoPequena, imagemPadraoPequena, imagemPadraoPequena],      };
   },
   computed: {
     thumbPosition() {
@@ -21,6 +41,40 @@ export default {
       // Alterna o estado entre ligado/desligado
       this.isOn = !this.isOn;
     },
+    atualizarVariedades() {
+      // Atualiza as variedades com base na fruta selecionada
+      this.variedadesDisponiveis = this.frutas[this.frutaSelecionada] || [];
+      this.variedadeSelecionada = ""; // Limpa a seleção de variedade
+    },
+    atualizarFator() {
+      // Atualiza as variedades com base na fruta selecionada
+      this.fatorDisponiveis = this.unidades[this.unidadeSelecionada] || [];
+      this.fatorSelecionada = ""; // Limpa a seleção de variedade
+    },
+    selecionarImagem(tipo, index) {
+      // Alterando a lógica para que cada botão controle sua própria imagem
+      this.$refs.inputImagem.click();
+      this.imagemTipo = tipo; // Armazena o tipo de imagem (grande ou pequena)
+      this.imagemIndex = index; // Armazena o índice da imagem selecionada para garantir a alteração correta
+    },
+    carregarImagem(event) {
+      const arquivo = event.target.files[0];
+      if (arquivo) {
+        const leitor = new FileReader();
+        leitor.onload = (e) => {
+          // Condicional para aplicar a imagem na posição correta
+          if (this.imagemTipo === 'grande') {
+            this.imagemSelecionadaGrande = e.target.result; // Atualiza imagem grande
+          } else {
+            // Fazendo uma cópia e atualizando a imagem
+            const novaImagemPequena = [...this.imagemSelecionadaPequena];
+            novaImagemPequena[this.imagemIndex] = e.target.result;
+            this.imagemSelecionadaPequena = novaImagemPequena; // Atualiza a imagem pequena
+          }
+        };
+        leitor.readAsDataURL(arquivo);
+      }
+    }
   },
 }
 </script>
@@ -38,38 +92,41 @@ export default {
           <div class="imagens">
             <div class="row g-0">
               <div class="col-6 d-imagem-grande">
-                <button class="btn-ft-grande">
-                  <img src="../../../assets/site-assets/anunciar/imagem-grande-icon.png" class="g-imagem"/>
+                <button class="btn-ft-grande" type="button" @click="selecionarImagem('grande')">
+                  <img :src="imagemSelecionadaGrande" class="g-imagem"/>
                 </button>
                 <div class="card card-ft-grande">
                   <h4 class="card-ft-grande-titulo">você sabia?</h4>
                   <p class="card-ft-grande-paragraph">anúncios com 4 ou mais fotos<br/>dobram sua chances de venda.</p>
                 </div>
+                <input ref="inputImagem" type="file" accept="image/*" style="display: none;" @change="carregarImagem"/>
               </div>
               <div class="col-6 d-imagem-pequena">
                 <div class="img-superior row">
                   <div class="col-3">
-                    <button class="btn-ft-pequeno">
-                      <img src="../../../assets/site-assets/anunciar/imagem-pequena-icon.png" class="p-imagem"/>
+                    <button class="btn-ft-pequeno" type="button" @click="selecionarImagem('pequena', 0)">
+                      <img :src="imagemSelecionadaPequena[0]" class="p-imagem"/>
                     </button>
                   </div>
                   <div class="col-3">
-                    <button class="btn-ft-pequeno">
-                      <img src="../../../assets/site-assets/anunciar/imagem-pequena-icon.png" class="p-imagem"/>
-                    </button>                  </div>
+                    <button class="btn-ft-pequeno" type="button" @click="selecionarImagem('pequena', 1)">
+                      <img :src="imagemSelecionadaPequena[1]" class="p-imagem"/>
+                    </button>
+                  </div>
                 </div>
                 <div class="img-inferior row">
                   <div class="col-3">
-                    <button class="btn-ft-pequeno">
-                      <img src="../../../assets/site-assets/anunciar/imagem-pequena-icon.png" class="p-imagem"/>
-                    </button>                  </div>
+                    <button class="btn-ft-pequeno" type="button" @click="selecionarImagem('pequena', 2)">
+                      <img :src="imagemSelecionadaPequena[2]" class="p-imagem"/>
+                    </button>           </div>
                   <div class="col-3">
-                    <button class="btn-ft-pequeno">
-                      <img src="../../../assets/site-assets/anunciar/imagem-pequena-icon.png" class="p-imagem"/>
-                    </button>                  </div>
+                    <button class="btn-ft-pequeno" type="button" @click="selecionarImagem('pequena', 3)">
+                      <img :src="imagemSelecionadaPequena[3]" class="p-imagem"/>
+                    </button>
+                  </div>
                 </div>
                 <div class="card card-ft-pequena">
-                  <div class="row">
+                  <div class="row card-preco-volume-row">
                     <h4 class="card-ft-pequena-titulo">preço Volume</h4>
                     <div id="toggle-switch" @click="toggleState">
                       <div class="track">
@@ -103,20 +160,22 @@ export default {
           <div class="d-fruta">
             <label for="id-fruta" class="label">Fruta *</label>
             <div class="input-wrapper">
-              <select id="f" name="fruta">
-                <option value="opcao1">Opção 1</option>
-                <option value="opcao2">Opção 2</option>
-                <option value="opcao3">Opção 3</option>
+              <select id="fruta" v-model="frutaSelecionada" @change="atualizarVariedades">
+                <option value="">Selecione uma fruta</option>
+                <option value="maca">Maçã</option>
+                <option value="banana">Banana</option>
+                <option value="uva">Uva</option>
               </select>
             </div>
           </div>
           <div class="d-variedade">
-            <label for="id-fruta" class="label">Variedade *</label>
+            <label for="id-variedade" class="label">Variedade *</label>
             <div class="input-wrapper">
-              <select id="f" name="fruta">
-                <option value="opcao1">Opção 1</option>
-                <option value="opcao2">Opção 2</option>
-                <option value="opcao3">Opção 3</option>
+              <select id="variedade" v-model="variedadeSelecionada">
+                <option value="opcao1">Selecione uma variedade</option>
+                <option v-for="variedade in variedadesDisponiveis" :key="variedade" :value="variedade">
+                  {{ variedade }}
+                </option>
               </select>
             </div>
           </div>
@@ -128,31 +187,33 @@ export default {
                   id="id-name"
                   v-model="nome"
                   class="text-input-cnpj"
+                  placeholder="ex: 'PP,P,M,G,GG,XG-CAT1, CAT2, 135, etc...'"
               />
             </div>
             <div class="valores row">
               <div class="unidade">
-                <label for="id-fruta" class="label">Variedade *</label>
+                <label for="id-fruta" class="label">Unidade *</label>
                 <div class="in-wr-u">
-                  <select id="f" name="fruta">
-                    <option value="opcao1">Opção 1</option>
-                    <option value="opcao2">Opção 2</option>
-                    <option value="opcao3">Opção 3</option>
+                  <select id="unidade" v-model="unidadeSelecionada" @change="atualizarFator">
+                    <option value="KG">KG</option>
+                    <option value="G">G</option>
+                    <option value="MG">MG</option>
                   </select>
                 </div>
               </div>
               <div class="fator">
-                <label for="id-fruta" class="label">Variedade *</label>
+                <label for="id-fruta" class="label">Fator *</label>
                 <div class="in-wr-f">
-                  <select id="xf" name="fruta">
-                    <option value="opcao1">Opção 1</option>
-                    <option value="opcao2">Opção 2</option>
-                    <option value="opcao3">Opção 3</option>
+                  <select id="fator" v-model="fatorSelecionada">
+                    <option value="opcao1">un</option>
+                    <option v-for="fator in fatorDisponiveis" :key="fator" :value="fator">
+                      {{ fator }}
+                    </option>
                   </select>
                 </div>
               </div>
               <div class="preco">
-                <label for="id-fruta" class="label">celular</label>
+                <label for="id-fruta" class="label">Preço *</label>
                 <div class="in-wr-p">
                   <input
                       type="text"
@@ -164,7 +225,7 @@ export default {
                 </div>
               </div>
               <div class="preco">
-                <label for="id-fruta" class="label">celular</label>
+                <label for="id-fruta" class="label">Preço</label>
                 <div class="in-wr-p">
                   <input
                       type="text"
@@ -176,9 +237,9 @@ export default {
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row qtd">
               <div class="qtd-min">
-                <label for="id-fruta" class="label">celular</label>
+                <label for="id-fruta" class="label">Quantidade Mínima</label>
                 <div class="in-wr-p">
                   <input
                       type="text"
@@ -190,7 +251,7 @@ export default {
                 </div>
               </div>
               <div class="qtd-dis">
-                <label for="id-fruta" class="label">celular</label>
+                <label for="id-fruta" class="label">Quantidade disponível</label>
                 <div class="in-wr-p">
                   <input
                       type="text"
@@ -205,14 +266,13 @@ export default {
           </div>
         </div>
       </div>
+      <div class="navegarb d-flex column">
+        <div class="cadastrar-dados">
+          <button class="button-cadastrar"  @click="enviarDados"> cadastrar dados </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="navegarb d-flex">
-    <div class="cadastrar-dados">
-      <button class="button-cadastrar"  @click="enviarDados"> cadastrar dados </button>
-    </div>
-  </div>
-
 </template>
 
 <style scoped>
@@ -272,7 +332,6 @@ export default {
   display: flex;
   height: 48px;
   width: 91px;
-  max-width: 100%;
   align-items: center;
   border: 1px solid #E2E0E2;
   border-radius: 12px;
@@ -295,6 +354,12 @@ export default {
   margin-bottom: 10px;
   width: 100px;
 }
+.row .label {
+  width: 300px;
+}
+.qtd-min, .qtd-dis {
+  margin-top: 20px
+}
 .valores .input-wrapper {
   display: flex;
   height: 48px;
@@ -307,7 +372,7 @@ export default {
   background-color: #fff;
   margin-bottom: 25px;
 }
-#f {
+#variedade, #fruta, #unidade {
   width: calc(100% - 20px);
   max-width: 100%;
   height: 45px;
@@ -316,7 +381,7 @@ export default {
   border: none;
   padding: 0 10px;
 }
-#xf {
+#fator {
   width: calc(100% - 20px);
   max-width: 90px;
   height: 45px;
@@ -349,6 +414,7 @@ export default {
 .fator {
   width: 91px;
   height: 74px;
+  margin-right: 20px;
 }
 .preco {
   width: 139px;
@@ -488,10 +554,7 @@ export default {
 }
 .navegarb {
   display: flex;
-  justify-content: space-between; /* Botões ficam alinhados nos extremos */
-  align-items: center;
-  margin: 50px; /* Margens padrão para espaços em telas maiores */
-  gap: 20px; /* Adiciona espaçamento entre os botões */
+  margin-top: 50px;
 }
 .button-cadastrar {
   width: 348px;
@@ -507,19 +570,103 @@ export default {
   border: none;
   background-color: white;
 }
+.qtd m̀argin {
+  margin: 0px;
+}
+.qtd .label {
+  width: 300px;
+}
 .btn-ft-pequeno {
   border: none;
   background-color: white;
 }
+input::placeholder {
+  color: #999; /* Define a cor do placeholder */
+  font-style: italic; /* Opcional: adiciona estilo */
+}
 @media (max-width: 768px) {
   .conteudo {
     flex-direction: column;
+    margin-top: 20px;
   }
   .row {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
-  .img-superior.row {
+  .fotos, .formulario {
+    width: 100%;
+  }
+  .formulario {
+    margin-top: 50px;
+  }
+  .d-imagem-grande {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+  .g-imagem {
+    width: 100%;
+    height: auto;
+  }
+  .d-imagem-pequena .img-superior,
+  .d-imagem-pequena .img-inferior {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 150px;
+  }
+  .col-3 {
+    width: 45%;
+    margin: 5px;
+  }
+  .card-ft-grande,
+  .card-ft-pequena {
+    margin-top: 20px;
+  }
+  .valores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .unidade,
+  .fator,
+  .preco,
+  .qtd-min,
+  .qtd-dis {
+    width: 100%;
+  }
+  .button-cadastrar {
+    width: 100%;
+  }
+  .col-3 {
+    margin: 0px;
+  }
+  .p-imagem {
+    margin: 10px;
+    width: 120px;
+    height: 120px;
+  }
+  .card-preco-volume-row {
     flex-direction: row;
   }
+  .in-wr-u {
+    width: 100%;
+  }
+  .in-wr-p {
+    width: 100%;
+  }
+  .in-wr-f {
+    width: 100%;
+  }
+  .card-para {
+    font-size: 14px;
+    width: 250px;
+  }
+  input::placeholder {
+    font-size: 12px; /* Diminui o tamanho da fonte */
+    color: #999; /* Define a cor do placeholder */
+    font-style: italic; /* Opcional: adiciona estilo */
+  }
 }
+
 </style>
